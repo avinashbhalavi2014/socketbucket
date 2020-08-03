@@ -20,7 +20,7 @@
             function sendData(){
                let data = document.getElementById('data').value; 
                socket.emit('send',{data},function(res){
-                   console.log('callback:');
+                   console.log('callback:',res);
                })
             }
         </script>
