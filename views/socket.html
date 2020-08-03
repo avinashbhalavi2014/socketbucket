@@ -2,7 +2,10 @@
     <head>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         <script>
-            var socket = io.connect('http://localhost:8081')
+            let userId = localStorage.getItem('userId');
+            var socket = io.connect('http://localhost:8081',{
+                query: { userId: userId }
+            })
             socket.on('connected',function(data){
                 console.log('Socket conected (client side):',data);
                 //console.log('socket disconnected',socket.disconnected);
@@ -13,9 +16,20 @@
             socket.on('socketbucket', function (data) {
               console.log('socket data:', data);
             })
+
+            function sendData(){
+               let data = document.getElementById('data').value; 
+               socket.emit('send',{data},function(res){
+                   console.log('callback:');
+               })
+            }
         </script>
     </head>
     <body>
-        Connected to Server
+  
+            <label for="data">Enter bucket data:</label>
+            <input type="text" id="data" name="data"><br><br>
+            <button onclick="sendData()">Submit</button>
+     
     </body>
 </html>

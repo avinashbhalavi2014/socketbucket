@@ -5,6 +5,11 @@ const bucket = new mongoose.Schema(
             type:String,
             required: true
         },
+        userId:{
+            type:mongoose.Schema.Types.ObjectId,
+            required:true,
+            ref:'user'
+        },
         details:{
             type: String,
             default: null

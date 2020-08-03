@@ -1,0 +1,35 @@
+<html>
+
+<head>
+    <script>
+        function saveUser() {
+            //debugger;
+            let user = document.getElementById('user').value;
+            let data = {user:user}
+            const Http = new XMLHttpRequest();
+            const url = 'http://localhost:8081/user';
+            Http.open("POST", url);
+            Http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            Http.send(`user=${user}`);
+
+            Http.onreadystatechange = function () {
+               // debugger;
+                console.log(Http.responseText)
+                if (this.readyState == 4 && this.status == 201) {
+                    let data = JSON.parse(Http.responseText)
+                    localStorage.setItem('userId', data.userId);
+                    window.location = "http://localhost:8081/socket";
+                }
+            };
+        }
+    </script>
+</head>
+
+<body>
+        <label for="user">Enter user name:</label>
+        <input type="text" id="user" name="user"><br><br>
+        <!-- <input type="submit" value="Submit"> -->
+        <button onclick="saveUser()">Submit</button>
+</body>
+
+</html>

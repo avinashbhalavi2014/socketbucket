@@ -1,11 +1,10 @@
 const cron = require('node-cron');
-const mongoose = require('mongoose');
-const bucketModel = mongoose.model('bucket');
+const bucketDB = require('../database/bucketDB')
 
 module.exports = function (io) {
  cron.schedule('*/10 * * * * *', async()=>{
      try {
-         let bucketList = await bucketModel.findOne({});
+         let bucketList = await bucketDB.getBucket();
          if(!bucketList) { 
              bucketList = {success: true, list:'data'}
          }
